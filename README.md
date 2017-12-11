@@ -65,6 +65,29 @@ python COAPClient.py
 ```````````````````````````````````````````````````````````
 14.Press the COMPARE button on the QT GUI of Client Pi to view the graphs.
 
+The next few steps are for the installations of RabbitMQ:-
+
+15.Install Python client Pika:
+```````````````````````````````````````````````````````````
+sudo pip install pika
+```````````````````````````````````````````````````````````
+16.Add the Apt repository to your Apt source list directory:
+```````````````````````````````````````````````````````````
+echo "deb https://dl.bintray.com/rabbitmq/debian {distribution} main" | sudo tee /etc/apt/sources.list.d/bintray.rabbitmq.list
+```````````````````````````````````````````````````````````
+17. Next add our public key to your trusted key list:
+```````````````````````````````````````````````````````````
+wget -O- https://www.rabbitmq.com/rabbitmq-release-signing-key.asc | 
+sudo apt-key add -
+sudo apt-get install rabbitmq-server
+```````````````````````````````````````````````````````````
+18.Install the following if there's an issue in installing the rabbitmq server
+```````````````````````````````````````````````````````````
+sudo apt-get install apt-transport-https 
+sudo apt-get update
+```````````````````````````````````````````````````````````
+
+
 
 Project Work
 ---------------------------------
