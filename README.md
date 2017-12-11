@@ -56,6 +56,7 @@ sudo pip install numpy
 python Client.py
 ```````````````````````````````````````````````````````````
 12.Press the REQUEST DATA button.
+
 13.In the of the "examples" folder of "Server" folder of the Server Pi run the following one by one and subsequently press the required button on the Client Side GUI:
 ```````````````````````````````````````````````````````````
 python MQTTServer.py
