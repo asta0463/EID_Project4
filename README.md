@@ -121,6 +121,8 @@ References
 
 10.https://github.com/mwasilak/txThings
 
+11.http://www.rabbitmq.com/install-debian.htm
+
 
 
 
