@@ -64,10 +64,6 @@ t3_coap=0
 
 #next 3 functions are for MQTT
 def on_message(client, userdata, message):
-	#print("message received " ,str(message.payload.decode("utf-8")))
-	#print("message topic=",message.topic)
-	#print("message qos=",message.qos)
-	#print("message retain flag=",message.retain)
 	global t2_mqtt
 	global t3_mqtt
 	t2_mqtt=time.time()
@@ -81,7 +77,7 @@ def on_subscribe(client, userdata, mid, granted_qos):
 	print("sub ack " + str(mid) + "qos " +str(granted_qos))
 	
 
-def on_publish(client,userdata,result):             #create function for callback
+def on_publish(client,userdata,result): #create function for callback
         print("data published \n")
         pass
 
@@ -126,15 +122,14 @@ class MyMainWindow(QtGui.QMainWindow):
         client.loop_stop() #stop the loop
 
     def WebTest(self):
-        websocket.enableTrace(True)
+        #websocket.enableTrace(True)
         #ws = create_connection("ws://echo.websocket.org/")
-        ws = websocket.create_connection("ws://127.0.0.1:8080/websocket")
-        #print("Sending 'Hello, World'...")
+        ws = websocket.create_connection("ws://10.201.10.43:8080/websocket")
         global t1_web
         t1_web=time.time()
         ws.send("Message is" + format(total))
-        #print("Sent")
-        #print("Receiving...")
+        print("Sent")
+        print("Receiving...")
         result = ws.recv()
         global t2_web
 	global t3_web
@@ -143,7 +138,7 @@ class MyMainWindow(QtGui.QMainWindow):
 	print("%f" % t1_web)
 	t3_web=t2_web-t1_web
 	print("Time taken for WebSockets in seconds is %f" % t3_web)
-        #print("Received {}".format(result))
+        print("Received {}".format(result))
         ws.close()
 
     def COAPTest(self):
@@ -343,20 +338,12 @@ class MyMainWindow(QtGui.QMainWindow):
 
 class Agent():
     """
-    Example class which performs single GET request to coap.me
-    port 5683 (official IANA assigned CoAP port), URI "test".
-    Request is sent 1 second after initialization.
-    
-    Remote IP address is hardcoded - no DNS lookup is preformed.
-
-    Method requestResource constructs the request message to
-    remote endpoint. Then it sends the message using protocol.request().
-    A deferred 'd' is returned from this operation.
+    Class for COAP implementation which performs single GET request to coap.me
+    port 5683 (official IANA assigned CoAP port)
 
     Deferred 'd' is fired internally by protocol, when complete response is received.
 
-    Method printResponse is added as a callback to the deferred 'd'. This
-    method's main purpose is to act upon received response (here it's simple print).
+    Method printResponse is added as a callback to the deferred 'd'.
     """
 
     def __init__(self, protocol):
@@ -369,15 +356,15 @@ class Agent():
         #Send request to "coap://coap.me:5683/test"
         request.opt.uri_path = ('counter',)
         request.opt.observe = 0
-        request.remote = (ip_address("10.201.20.32"), coap.COAP_PORT)
-        global t1_coap
+        request.remote = (ip_address("10.201.10.43"), coap.COAP_PORT)
         d = protocol.request(request, observeCallback=self.printLaterResponse)
+        global t1_coap
+        t1_coap=time.time()
         d.addCallback(self.printResponse)
         d.addErrback(self.noResponse)
-        t1_coap=time.time()
 
     def printResponse(self, response):
-        #print 'First result: ' + response.payload
+        #print 'Result: ' + response.payload
         global t2_coap
 	global t3_coap
 	t2_coap=time.time()
@@ -420,5 +407,3 @@ app=QtGui.QApplication(sys.argv)
 myapp=MyMainWindow()
 myapp.show()
 sys.exit(app.exec_())
-
-
