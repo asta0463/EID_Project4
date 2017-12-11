@@ -97,6 +97,11 @@ Our Results:
 WebSockets is the fastest followed by MQTT and then COAP.
 
 
+Project Additions
+---------------------------------
+We tried AMQP with RabbitMQ. It works on the localhost and gives a result of around 0.1-0.2 seconds, but we have still not got it working with the IP of the second Pi. 
+
+
  
 
 References
