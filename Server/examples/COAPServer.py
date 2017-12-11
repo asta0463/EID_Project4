@@ -2,6 +2,7 @@
 ##  @brief: Implementation of Server Side COAP
 ##  @Authors: Rhea Cooper, Ashish Tak (Univeristy of Colorado, Boulder)
 ##  @Date: 10/23/2017
+## Reference: https://github.com/mwasilak/txThings
 
 import sys
 from twisted.internet import defer
