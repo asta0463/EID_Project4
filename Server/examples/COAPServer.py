@@ -1,3 +1,8 @@
+##  @file: ServerWS.py
+##  @brief: Implementation of Server Side COAP
+##  @Authors: Rhea Cooper, Ashish Tak (Univeristy of Colorado, Boulder)
+##  @Date: 10/23/2017
+
 import sys
 from twisted.internet import defer
 from twisted.internet.protocol import DatagramProtocol
