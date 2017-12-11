@@ -1,7 +1,7 @@
 Protocol Comparison
 ==================================
 Repository for the fourth Project of ECEN 5053-002 : Embedded Interface Design   
-This project involves comparison of the efficiency of 3 IOT Protocols (MQTT,COAP,WEBSOCKETS) based on the roundtrip time taken to transfer a message from Client to Server and back to the Client.
+This project involves comparison of the efficiency of 4 IOT Protocols (MQTT,COAP,WEBSOCKETS,AMQP) based on the roundtrip time taken to transfer a message from Client to Server and back to the Client.
 
 
 Authors: Rhea Cooper and Ashish Tak
@@ -57,11 +57,12 @@ python Client.py
 ```````````````````````````````````````````````````````````
 12.Press the REQUEST DATA button.
 
-13.In the of the "examples" folder of "Server" folder of the Server Pi run the following one by one and subsequently press the required button on the Client Side GUI:
+13.In the "examples" folder of "Server",er of the Server Pi run the following one by one and subsequently press the required button on the Client Side GUI:
 ```````````````````````````````````````````````````````````
 python MQTTServer.py
 python WSServer.py
-python COAPClient.py
+python COAPServer.py
+python AMQPServer.py
 ```````````````````````````````````````````````````````````
 14.Press the COMPARE button on the QT GUI of Client Pi to view the graphs.
 
