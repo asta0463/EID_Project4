@@ -20,12 +20,16 @@ import json
 import boto3
 from boto3.session import Session
 import logging
+
+#import module required for MQTT
 import paho.mqtt.client as mqtt
 
+#import module required for WebSockets
 import websocket
-import numpy as np
+
 
 #importing required modules to plot graph
+import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_qt4agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.backends.backend_qt4agg import NavigationToolbar2QTAgg as NavigationToolbar
@@ -145,6 +149,7 @@ class MyMainWindow(QtGui.QMainWindow):
         coapclient.requestResource();
 
     def Compare(self):
+	"""method to display roundtrip times numerically and graphically"""
         strn="Number of messages:30"
         strm="MQTT : "
         strw="WebSockets :"
@@ -335,7 +340,7 @@ class MyMainWindow(QtGui.QMainWindow):
 
 	listWidget.show()
 	listWidget.exec_()
-
+#COAP class and functions
 class Agent():
     """
     Class for COAP implementation which performs single GET request to coap.me
@@ -382,7 +387,7 @@ class Agent():
         print failure
         reactor.stop()
 
-
+#MQTT -creating an object and connecting to online broker
 broker_address="iot.eclipse.org"
 print("creating  instance")
 client = mqtt.Client() #create new instance
@@ -394,6 +399,7 @@ client.connect(broker_address) #connect to broker
 client.on_subscribe=on_subscribe
 client.on_publish=on_publish
 
+#COAP
 #log.startLogging(sys.stdout)
 endpoint = resource.Endpoint(None)
 protocol = coap.Coap(endpoint)
@@ -402,7 +408,7 @@ reactor.listenUDP(61616, protocol)
 thread.start_new_thread(reactor.run,((),))
 #reactor.run()
 
-#instantiating the above class
+#instantiating the above QT GUI class
 app=QtGui.QApplication(sys.argv)
 myapp=MyMainWindow()
 myapp.show()
