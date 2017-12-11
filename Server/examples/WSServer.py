@@ -1,7 +1,7 @@
 ##  @file: ServerWS.py
 ##  @brief: Implementation of Server Side Web Socket Handler
 ##  @Authors: Rhea Cooper, Ashish Tak (Univeristy of Colorado, Boulder)
-##  @Date: 10/23/2017
+##  @Date: 12/09/2017
 
 #!/usr/bin/python
 #Reference: http://www.giantflyingsaucer.com/blog/?p=4602
