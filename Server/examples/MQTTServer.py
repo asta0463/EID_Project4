@@ -1,3 +1,9 @@
+##  @file: ServerWS.py
+##  @brief: Implementation of Server Side MQTT
+##  @Authors: Rhea Cooper, Ashish Tak (Univeristy of Colorado, Boulder)
+##  @Date: 12/11/2017
+
+
 import paho.mqtt.client as mqtt
 
 # This is the Subscriber
