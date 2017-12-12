@@ -1,8 +1,8 @@
-##  @file: ServerWS.py
+##  @file: COAPServer.py
 ##  @brief: Implementation of Server Side COAP
 ##  @Authors: Rhea Cooper, Ashish Tak (Univeristy of Colorado, Boulder)
-##  @Date: 10/23/2017
-## Reference: https://github.com/mwasilak/txThings
+##  @Date: 12/11/2017
+##  Reference: https://github.com/mwasilak/txThings
 
 import sys
 from twisted.internet import defer
@@ -13,10 +13,7 @@ import txthings.resource as resource
 import txthings.coap as coap
 
 class CounterResource (resource.CoAPResource):
-    """
-    Example Resource which supports only GET method. Response is a
-    simple counter value.
-    """
+    """A simple Resource which supports only GET method"""
 
     def __init__(self, start=0):
         resource.CoAPResource.__init__(self)

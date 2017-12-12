@@ -1,10 +1,9 @@
 ##  @file: Client.py
-##  @brief: Implementation of the Client side GUI, and reception of data from the SQS queue
+##  @brief: Implementation of the Client side GUI, for reception of data from the SQS queue and testing the communication via multiple protocols
 ##  @Authors: Rhea Cooper, Ashish Tak (University of Colorado, Boulder)
 ##  @Date: 11/12/2017
 
 #!/usr/bin/python
-#References: http://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-tutorials.html and https://boto3.readthedocs.io/en/latest/index.html
 
 import sys 
 import time 
@@ -68,28 +67,29 @@ t1_amqp=0
 t2_amqp=0
 t3_amqp=0
 
-#next 3 functions are for MQTT
+#Next 3 functions are for MQTT 
 def on_message(client, userdata, message):
 	global t2_mqtt
 	global t3_mqtt
+	#Fetch the time on receipt of the message and show the diff
 	t2_mqtt=time.time()
 	print("%f" % t2_mqtt)
 	print("%f" % t1_mqtt)
 	t3_mqtt=t2_mqtt-t1_mqtt
 	print(" Time difference for MQTT is %f" % t3_mqtt)
 	
-
 def on_subscribe(client, userdata, mid, granted_qos):
 	print("sub ack " + str(mid) + "qos " +str(granted_qos))
 	
-
 def on_publish(client,userdata,result): #create function for callback
         print("data published \n")
         pass
 
-#AMQP Calback function
+
+#AMQP Callback function
 def process_function(msg):
   print(" Received message back at AMQP client")
+  #Fetch the time on receipt of the message and show the diff
   global t2_amqp
   global t3_amqp
   t2_amqp=time.time()
@@ -127,12 +127,13 @@ class MyMainWindow(QtGui.QMainWindow):
         """Set the default value for Temperature Unit"""
 	self.ui.C = 1
 
+	'''Functions for executing the protocol tests'''
+
     def MQTTTest(self):
         client.loop_start() #start the loop
-        #print(total)
         global t1_mqtt
+        #Record the time before publishing the message
         t1_mqtt=time.time();
-        #print("body of msg is : %s" % format(total))
         print("Publishing message to topic")
         client.publish("Project4",format(total))
         print("Subscribing to topic","Project4/Message/Return")
@@ -358,6 +359,7 @@ class MyMainWindow(QtGui.QMainWindow):
         connection = pika.BlockingConnection(params) # Connect to CloudAMQP
         channel = connection.channel() # start a channel
         channel.queue_declare(queue='data') # Declare a queue
+        #Publish the message and record the time
         channel.basic_publish(exchange='', routing_key='data', body=format(total))
         print ("AMQP Message sent")
         global t1_amqp
@@ -368,8 +370,8 @@ class MyMainWindow(QtGui.QMainWindow):
         url = os.environ.get('CLOUDAMQP_URL', 'amqp://guest:guest@localhost:5672/%2f')
         params = pika.URLParameters(url)
         connection = pika.BlockingConnection(params)
-        channel = connection.channel() # start a channel
-        channel.queue_declare(queue='data') # Declare a queue
+        channel = connection.channel() 
+        channel.queue_declare(queue='data') 
         def callback(ch, method, properties, body):
             process_function(body)
             pass
@@ -379,6 +381,7 @@ class MyMainWindow(QtGui.QMainWindow):
         channel.start_consuming()
         connection.close();
         pass
+
 
 class Agent():
     """

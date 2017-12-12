@@ -4,7 +4,6 @@
 ##  @Date: 11/12/2017
 
 #!/usr/bin/python
-#References: http://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-tutorials.html and https://boto3.readthedocs.io/en/latest/index.html
 
 import sys 
 import time 
@@ -26,7 +25,6 @@ import paho.mqtt.client as mqtt
 
 #import module required for WebSockets
 import websocket
-
 
 #importing required modules to plot graph
 import numpy as np
@@ -54,7 +52,7 @@ MinH=[]
 LatestH=[]
 total=[]
 
-#globals
+#globals to measure time counts
 body=0
 t1_mqtt=0
 t2_mqtt=0
@@ -66,8 +64,9 @@ t1_coap=0
 t2_coap=0
 t3_coap=0
 
-#next 3 functions are for MQTT
+#Next 3 functions are for MQTT
 def on_message(client, userdata, message):
+        #Fetch the time on receipt of the message and print the diff
 	global t2_mqtt
 	global t3_mqtt
 	t2_mqtt=time.time()
@@ -76,11 +75,9 @@ def on_message(client, userdata, message):
 	t3_mqtt=t2_mqtt-t1_mqtt
 	print(" Time difference for MQTT is %f" % t3_mqtt)
 	
-
 def on_subscribe(client, userdata, mid, granted_qos):
 	print("sub ack " + str(mid) + "qos " +str(granted_qos))
 	
-
 def on_publish(client,userdata,result): #create function for callback
         print("data published \n")
         pass
@@ -114,10 +111,9 @@ class MyMainWindow(QtGui.QMainWindow):
 
     def MQTTTest(self):
         client.loop_start() #start the loop
-        #print(total)
         global t1_mqtt
+        #Send the request to Server and record the time
         t1_mqtt=time.time();
-        #print("body of msg is : %s" % format(total))
         print("Publishing message to topic")
         client.publish("Project4",format(total))
         print("Subscribing to topic","Project4/Message/Return")
@@ -126,14 +122,13 @@ class MyMainWindow(QtGui.QMainWindow):
         client.loop_stop() #stop the loop
 
     def WebTest(self):
-        #websocket.enableTrace(True)
-        #ws = create_connection("ws://echo.websocket.org/")
+        websocket.enableTrace(True)
         ws = websocket.create_connection("ws://10.201.10.43:8080/websocket")
+        #Send the request to Server and record the time
         global t1_web
         t1_web=time.time()
         ws.send("Message is" + format(total))
-        print("Sent")
-        print("Receiving...")
+        #Fetch the time on receipt of the message and print the diff
         result = ws.recv()
         global t2_web
 	global t3_web
@@ -142,7 +137,6 @@ class MyMainWindow(QtGui.QMainWindow):
 	print("%f" % t1_web)
 	t3_web=t2_web-t1_web
 	print("Time taken for WebSockets in seconds is %f" % t3_web)
-        print("Received {}".format(result))
         ws.close()
 
     def COAPTest(self):
@@ -170,7 +164,8 @@ class MyMainWindow(QtGui.QMainWindow):
         #objects = ('MQTT', 'Websockets', 'COAP', 'AMQP')
         y_pos = np.arange(len(objects))
         performance = list_all
- 
+
+        #Plot the graph for a comparison of the different times taken
         plt.bar(y_pos, performance, align='center', alpha=0.5)
         plt.xticks(y_pos, objects)
         plt.ylabel('Seconds')
@@ -178,7 +173,6 @@ class MyMainWindow(QtGui.QMainWindow):
         plt.show()
         
     def TempGraph(self):
-        """graph plotting Referenced from a youtube video :https://www.youtube.com/watch?v=Wk7CECwebMc"""
  	plt.cla()
 	ax=self.ui.figure.add_subplot(111)
 	x1=[i for i in range(len(AvgT))]  #value count on x axis
@@ -197,7 +191,6 @@ class MyMainWindow(QtGui.QMainWindow):
 	self.ui.canvas.draw()
 
     def HumGraph(self):
-        """graph plotting Referenced from a youtube video :https://www.youtube.com/watch?v=Wk7CECwebMc"""
         plt.cla()
         ax=self.ui.figure.add_subplot(111)
         x1=[i for i in range(len(AvgH))]  #value count on x axis
@@ -340,7 +333,8 @@ class MyMainWindow(QtGui.QMainWindow):
 
 	listWidget.show()
 	listWidget.exec_()
-#COAP class and functions
+
+
 class Agent():
     """
     Class for COAP implementation which performs single GET request to coap.me
@@ -353,15 +347,15 @@ class Agent():
 
     def __init__(self, protocol):
         self.protocol = protocol
-        #reactor.callLater(1, self.requestResource)
 
     def requestResource(self):
         payload= format(total)
         request = coap.Message(code=coap.GET,payload=payload)
-        #Send request to "coap://coap.me:5683/test"
+        #Send request to "coap://coap.me:5683/counter"
         request.opt.uri_path = ('counter',)
         request.opt.observe = 0
         request.remote = (ip_address("10.201.10.43"), coap.COAP_PORT)
+        #Send the request to Server and record the time
         d = protocol.request(request, observeCallback=self.printLaterResponse)
         global t1_coap
         t1_coap=time.time()
@@ -369,7 +363,7 @@ class Agent():
         d.addErrback(self.noResponse)
 
     def printResponse(self, response):
-        #print 'Result: ' + response.payload
+        #Fetch the time on receipt of the message and print the diff
         global t2_coap
 	global t3_coap
 	t2_coap=time.time()
@@ -394,12 +388,11 @@ client = mqtt.Client() #create new instance
 client.on_message=on_message #attach function to callback
 print("connecting to broker")
 client.connect(broker_address) #connect to broker
-#print("Subscribing to topic","Project4/Message")
-#client.subscribe("Project4/Message/Return")
+print("Subscribing to topic","Project4/Message")
 client.on_subscribe=on_subscribe
 client.on_publish=on_publish
 
-#COAP
+#Instatntiating the class for COAP 
 #log.startLogging(sys.stdout)
 endpoint = resource.Endpoint(None)
 protocol = coap.Coap(endpoint)

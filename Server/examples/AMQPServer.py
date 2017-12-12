@@ -1,3 +1,8 @@
+##  @file: AMQPServer.py
+##  @brief: Implementation of the AMQP Server code to return the data back to the client
+##  @Authors: Rhea Cooper, Ashish Tak (University of Colorado, Boulder)
+##  @Date: 11/12/2017
+
 import pika, os, time
 
 #Callback function to act on incoming messages

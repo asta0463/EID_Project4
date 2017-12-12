@@ -4,7 +4,7 @@
 ##  @Date: 12/09/2017
 
 #!/usr/bin/python
-#Reference: http://www.giantflyingsaucer.com/blog/?p=4602
+
 
 import tornado.web
 import tornado.websocket
@@ -14,14 +14,15 @@ import socket
   
 class WebSocketHandler(tornado.websocket.WebSocketHandler):
     def open(self):
-        print("open")
+        print("opened")
   
     def on_message(self, message):
         print("Your message is received: ")
-        self.write_message(message) #sending received msg back to client
+        #sending received msg back to client
+        self.write_message(message) 
   
     def on_close(self):
-        print("close")
+        print("closed")
   
 class Application(tornado.web.Application):
     def __init__(self):
@@ -31,7 +32,7 @@ class Application(tornado.web.Application):
  
         tornado.web.Application.__init__(self, handlers)
   
-  
+
 if __name__ == '__main__':
     ws_app = Application()
     server = tornado.httpserver.HTTPServer(ws_app)
