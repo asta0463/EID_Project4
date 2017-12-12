@@ -24,25 +24,25 @@ sudo apt-get install qt4-designer
 ```````````````````````````````````````````````````````````
 sudo apt-get install pyqt4
 ```````````````````````````````````````````````````````````
-5.Install the following on the Pis for COAP:
+4.Install the following on the Pis for COAP:
 ```````````````````````````````````````````````````````````
 sudo pip install twisted==13.1.0
 sudo pip install txthings
 ```````````````````````````````````````````````````````````
-6.Install the following on the Pis for WebSockets:
+5.Install the following on the Pis for WebSockets:
 ```````````````````````````````````````````````````````````
 sudo pip install tornado
 sudo pip install websocket-client
 ```````````````````````````````````````````````````````````
-7.Install the following on the Pis for MQTT:
+6.Install the following on the Pis for MQTT:
 ```````````````````````````````````````````````````````````
 sudo pip install paho-mqtt
 ```````````````````````````````````````````````````````````
-8.Install boto3 on the Client Pi: 
+7.Install boto3 on the Client Pi: 
 ```````````````````````````````````````````````````````````
 pip install boto3
 ```````````````````````````````````````````````````````````
-9.To use Boto 3, you must first import it and tell it what service you are going to use:
+8.To use Boto 3, you must first import it and tell it what service you are going to use:
 ```````````````````````````````````````````````````````````
 import boto3
 sqs = boto3.resource('sqs')
@@ -50,45 +50,45 @@ sqs = boto3.resource('sqs')
 
 The next few steps are for the installations of RabbitMQ:-
 
-10.Install Python client Pika:
+9.Install Python client Pika:
 ```````````````````````````````````````````````````````````
 sudo pip install pika
 ```````````````````````````````````````````````````````````
-11.Add the Apt repository to your Apt source list directory:
+10.Add the Apt repository to your Apt source list directory:
 ```````````````````````````````````````````````````````````
 echo "deb https://dl.bintray.com/rabbitmq/debian {distribution} main" | sudo tee /etc/apt/sources.list.d/bintray.rabbitmq.list
 ```````````````````````````````````````````````````````````
-12. Next add the public key to your trusted key list and install the rabbitmq server:
+11. Next add the public key to your trusted key list and install the rabbitmq server:
 ```````````````````````````````````````````````````````````
 wget -O- https://www.rabbitmq.com/rabbitmq-release-signing-key.asc | 
 sudo apt-key add -
 
 sudo apt-get install rabbitmq-server
 ```````````````````````````````````````````````````````````
-13.Install the following if there's an issue in installing the rabbitmq server
+12.Install the following if there's an issue in installing the rabbitmq server
 ```````````````````````````````````````````````````````````
 sudo apt-get install apt-transport-https 
 sudo apt-get update
 ```````````````````````````````````````````````````````````
 
-14.Install numpy for graph on the Client Pi:
+13.Install numpy for graph on the Client Pi:
 ```````````````````````````````````````````````````````````
 sudo pip install numpy
 ```````````````````````````````````````````````````````````
-15.In the "Client" folder of the Client Pi run the following :
+14.In the "Client" folder of the Client Pi run the following :
 ```````````````````````````````````````````````````````````
 python Client.py
 ```````````````````````````````````````````````````````````
-16.Press the REQUEST DATA button to fetch data from the SQS queue.
+15.Press the REQUEST DATA button to fetch data from the SQS queue.
 
-17.In the "examples" folder of "Server",on the Server Pi run the following one by one and subsequently press the corresponding button on the Client Side GUI:
+16.In the "examples" folder of "Server",on the Server Pi run the following one by one and subsequently press the corresponding button on the Client Side GUI:
 ```````````````````````````````````````````````````````````
 python MQTTServer.py
 python WSServer.py
 python COAPServer.py
 python AMQPServer.py
 ```````````````````````````````````````````````````````````
-18.Press the COMPARE button on the QT GUI of Client Pi to view the graphs.
+17.Press the COMPARE button on the QT GUI of Client Pi to view the graphs.
 
 
 
