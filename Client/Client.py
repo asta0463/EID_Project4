@@ -221,11 +221,11 @@ class MyMainWindow(QtGui.QMainWindow):
 	listWidget.setWindowTitle("List of Values")
 	
         #Set up the Host URL and Certificates/Keys
-        host = "a1ah5fy1h4v4k9.iot.us-east-1.amazonaws.com"
+        host = "xxx"
         rootCAPath = "/home/pi/Desktop/EID_Project3/EID_Project3/Certificates/VeriSign-Class 3-Public-Primary-Certification-Authority-G5.pem"
         certificatePath = "/home/pi/Desktop/EID_Project3/EID_Project3/Certificates/57ca76974a-certificate.pem.crt"
         privateKeyPath = "/home/pi/Desktop/EID_Project3/EID_Project3/Certificates/57ca76974a-private.pem.key"
-        clientId = 'iotconsole-1510025171163-0'
+        clientId = 'xxx'
         topic = 'P3'
 
         # Configure logging
@@ -251,8 +251,8 @@ class MyMainWindow(QtGui.QMainWindow):
 
         # Create the Boto3 Session
         session = Session(
-            aws_access_key_id='AKIAIBMHYZLYB4EEOWUQ',
-            aws_secret_access_key='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',
+            aws_access_key_id='xxx',
+            aws_secret_access_key='xxx',
             region_name='us-east-1',
         )
         client = session.client('sqs')
@@ -276,7 +276,7 @@ class MyMainWindow(QtGui.QMainWindow):
         #Fetch the messages one by one 
         while count<30:
             messages = client.receive_message(
-                QueueUrl='https://sqs.us-east-1.amazonaws.com/499557241041/P3_2',
+                QueueUrl='xxx',
                 AttributeNames=['All'],
                 MaxNumberOfMessages=1,
                 VisibilityTimeout=60,
