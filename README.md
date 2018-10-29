@@ -1,7 +1,7 @@
 Protocol Comparison
 ==================================
 Repository for the fourth Project of ECEN 5053-002 : Embedded Interface Design   
-This project involves comparison of the efficiency of 4 IOT Protocols (MQTT,COAP,WEBSOCKETS,AMQP) based on the roundtrip time taken to transfer a message from Client to Server and back to the Client.
+This project involves comparison of the efficiency of 3 IOT Protocols (MQTT,COAP and Websockets) based on the roundtrip time taken to transfer a message from Client to Server and back to the Client.
 
 
 Authors: Rhea Cooper and Ashish Tak
@@ -86,7 +86,6 @@ python Client.py
 python MQTTServer.py
 python WSServer.py
 python COAPServer.py
-python AMQPServer.py
 ```````````````````````````````````````````````````````````
 17.Press the COMPARE button on the QT GUI of Client Pi to view the graphs.
 
@@ -100,11 +99,6 @@ Our Results:
 WebSockets is the fastest followed by MQTT and then COAP.
 
 
-Additional Credit
----------------------------------
-AMQP protocol was implemented using RabbitMQ, and the round time was measured in a similar way to be around 0.1-0.2 seconds. The implementation however is currently working only on the localhost, and is stuck up at an authentication error when connecting to the IP address of a remote Pi. This is inspite of creating an admin user for RabbitMQ and a corresponding virtual host.  
-
- 
 
 References
 -------------------------------------------------
