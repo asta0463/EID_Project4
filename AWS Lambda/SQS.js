@@ -30,8 +30,8 @@ exports.handler = (event, context, callback) => {
     var min_hum1;
     var avghumn;
     var avg_humm;
-    var queueURL1= "https://sqs.us-east-1.amazonaws.com/499557241041/P3_QUEUE";  //intermediate Q
-    var queueURL2= "https://sqs.us-east-1.amazonaws.com/499557241041/P3_2";
+    var queueURL1= "xxx";  //intermediate Q
+    var queueURL2= "xxx";
     var sqs1 = new AWS.SQS();  ////intermediate Q
     var sqs2 = new AWS.SQS();  //main
     //if the count value is 1 , it is the first MQTT message- the average , minimum, max will all be equal to that value
@@ -63,7 +63,7 @@ exports.handler = (event, context, callback) => {
                                     },
                            },
         MessageBody: msg,
-        QueueUrl: "https://sqs.us-east-1.amazonaws.com/499557241041/P3_QUEUE"  //intermediate queue
+        QueueUrl: "xxx"  //intermediate queue
         };
         //Adding the above message in both queues
         sqs1.sendMessage(params, function(err, data) {
@@ -82,7 +82,7 @@ exports.handler = (event, context, callback) => {
                                     },
                            },
         MessageBody: msg,
-        QueueUrl: "https://sqs.us-east-1.amazonaws.com/499557241041/P3_2"
+        QueueUrl: "xxx"
         };
         sqs2.sendMessage(params5, function(err, data) {
             if (err) {
@@ -172,7 +172,7 @@ else if(event.Count>1){
                                         },
                                },
             MessageBody: msg2,
-            QueueUrl: "https://sqs.us-east-1.amazonaws.com/499557241041/P3_2"
+            QueueUrl: "xxx"
             };
             sqs2.sendMessage(params3, function(err, data) {
                 if (err) {
@@ -191,7 +191,7 @@ else if(event.Count>1){
 
                                 },
             MessageBody: msg2,
-            QueueUrl: "https://sqs.us-east-1.amazonaws.com/499557241041/P3_QUEUE"
+            QueueUrl: "xxx"
             };
             var deleteParams = {
             QueueUrl: queueURL1,
