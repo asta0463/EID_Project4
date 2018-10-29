@@ -24,7 +24,7 @@ console.log('Loading function');
         // - TopicArn : the ARN of the Amazon SNS topic to which you want to publish 
         var params_sns = {
             Message: messageText,
-            TopicArn: "arn:aws:sns:us-east-1:499557241041:P3"
+            TopicArn: "xxx"
          };
          sns.publish(params_sns, context.done);
     };
